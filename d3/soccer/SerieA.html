@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Serie A</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">  
+    <style type="text/css">
+
+    .axis text{
+      font-family: Helvetica, Arial, sans-serif;
+      font-size: 12px;
+      text-anchor: end;
+    }
+    .axis path{
+      fill:none;
+      stroke:black;
+      stroke-width: 0.5px;
+      shape-rendering: crispEdges;
+    }
+    .bar{
+        stroke: none;
+        fill: "steelblue";
+    }
+    .textlabel{
+        font-family: Helvetica, Arial, sans-serif;
+        font-size:14px;
+        font-weight: bold;
+        text-anchor: middle;
+    }
+
+    h3 {
+
+        font-size:20px;
+
+    }
+
+
+    </style>
+</head>
+<body>
+<div id="info1">
+ 
+ <h1>Italian Soccer League "Serie A" in a Nutshell</h1>
+ <h2>Season 2014-2015</h2>
+
+ <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+ tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+ quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+ consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+ cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+ proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+</div>
+
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script>
+       var margin = {top:50, right:60, bottom:40, left:90},
+    width  = 1200,
+    height = 300;
+
+        var svg = d3.select("body")
+    .append("svg")
+    .attr("width", width)
+    .attr("height", height)
+    //.attr("viewBox", "0 0 " + width + " " + height);
+
+    var yScale = d3.scale.linear()
+    .range([height - margin.top - margin.bottom, 0]);
+
+    var xScale = d3.scale.ordinal()
+    .rangeRoundBands([0, width - margin.right - margin.left], .1);
+
+    var xAxis = d3.svg.axis()
+    .scale(xScale)
+    .orient("bottom");
+
+    var yAxis = d3.svg.axis()
+    .scale(yScale)
+    .orient("left")
+    .ticks(3);
+
+    
+    var turn = 0;
+
+    columns = ["Won", "Tie", "Lost", "Scored", "Conceded"];
+    colors = {"Won": "steelblue", "Tie": "Pink","Lost": "blue", "Scored": "red", "Conceded": "orange"};
+    titles = {"Won": "Matches Won", "Tie": "Matches Tied", "Lost": "Matches Lost", "Scored": "Goals Scored", "Conceded": "Goals Conceded"};
+
+    function display_data(columnid) {
+
+        column = columns[columnid];
+
+        d3.selectAll(".bar")
+        .transition()
+        .duration(600)
+        .attr("y", function(d){ return yScale(d[column]); })
+        .attr("height", function(d){ return height - margin.top - margin.bottom - yScale(d[column]); })
+        .style({"fill": colors[column]});
+
+        d3.selectAll(".title")
+        .transition()
+        .text(titles[column]);
+
+        d3.selectAll(".textlabel")
+        .transition()
+        .duration(700)
+        .attr("y", function(d){ return yScale(d[column]) - 3; })
+        .text(function(d){ return d3.format(",")(d[column]); });
+    }
+
+    
+
+    d3.csv("soccer.csv", function(error, data){
+
+        console.log(data);
+
+        yScale.domain([0,  30]);
+        xScale.domain(data.map(function(d){ return d["Team"]; }));
+
+        svg.append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+            .selectAll(".bar")
+            .data(data)
+            .enter()
+            .append("rect")
+            .attr("class", "bar")
+            .attr("x", function(d){ return xScale(d["Team"]); })
+            
+            
+            .attr("width", function(d){ return xScale.rangeBand(); })
+            .style({"fill":"steelblue"})
+            .on("click", function(d){
+                                    turn = turn + 1;
+                                    turn = turn % columns.length;   
+                                    display_data(turn);
+                                    });
+
+
+       // svg.append("g")
+         //   .attr("class", "y axis")
+           // .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+            //.call(yAxis);
+
+
+        svg.append("g")
+            .attr("class", "x axis")
+            .attr("transform", "translate(" + margin.left + "," + (height - margin.bottom) + ")")
+            .call(xAxis);
+
+        svg.append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+            .selectAll(".textlabel")
+            .data(data)
+            .enter()
+            .append("text")
+            .attr("class", "textlabel")
+            .attr("x", function(d){ return xScale(d["Team"]) + (xScale.rangeBand()/2); })
+            .style("text-anchor", "middle");
+            
+          
+        svg.append("g")
+            .attr("transform", "translate(" + (width/2) + ", 15)")
+            .append("text")
+            .attr("class", "title")
+            .style({"text-anchor":"middle", "font-family":"Arial", "font-weight":"800"});
+
+        display_data(turn); // turn = 0 here.
+
+            
+
+    });
+
+
+    </script>
+</body>
+</html>

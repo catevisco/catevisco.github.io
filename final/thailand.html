@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Thailand</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">  
+    <style type="text/css">
+
+    .axis text{
+      font-family: Helvetica, Arial, sans-serif;
+      font-size: 12px;
+      text-anchor: end;
+    }
+    .axis path{
+      fill:none;
+      stroke:black;
+      stroke-width: 0.5px;
+      shape-rendering: crispEdges;
+    }
+    .bar{
+        stroke: none;
+        fill: "steelblue";
+    }
+    .textlabel{
+        font-family: Helvetica, Arial, sans-serif;
+        font-size:10px;
+        font-weight: bold;
+        text-anchor: middle;
+    }
+
+    h3 {
+
+        font-size:20px;
+
+    }
+    #buttons{
+        text-align: center;
+    }
+
+    .text {
+
+        margin-left: 60px;
+        margin-right:40px;
+        margin-top: 30px;
+
+    }
+
+
+    #back  {
+
+        margin-left: 60px;
+        margin-right:40px;
+        margin-top: 30px;
+
+    }
+
+
+    #categories {
+
+        margin-left: 10px
+    }
+
+
+    
+    </style>
+</head>
+<body>
+    
+     <div id="info1" class="container">
+
+        <div>
+            <h1 class="text-center">HIV in Thailand</h1>
+            <h3 class="text-center"> A portrait of the HIV epidemics in the country from 1990 to 2011</h3>
+
+              
+
+         </div>
+         <br/>
+         <div id="chart"></div>
+         <div id="buttons">
+                        <button id="NewInfections" class="btn btn-warning">New Infections</button>
+                        <button id="Deaths" class="btn btn-danger">Deaths</button>
+                        <p>Source data: <b><a href="http://www.unaids.org/"> UNAIDS</a></b></p>
+                        <br />
+
+        </div>
+        <div class="row" id="categories">
+                <h3 class="text-center">HIV and AIDS estimates (2013)</h3>
+                <br/>
+               <div class="col-sm-5 ">
+                    
+
+                    <ul>
+                        <li>Number of people living with HIV: 440 000 [400 000-470 000]</li>
+                        <li>Adults aged 15 to 49 prevalence rate: 1.1 [1.0-1.2]</li>
+                        <li>Adults aged 15 and up living with HIV: 430 000 [390 000-470 000]</li>
+                        <li>Women aged 15 and up living with HIV: 190 000 [180 000-210 000]</li>
+                        <li>Children aged 0 to 14 living with HIV: 8 300 [7 600-9 000]</li>
+                        <li>Deaths due to AIDS: 18 000 [16 000-21 000]</li>
+                        <li>Orphans due to AIDS aged 0 to 17: n/a</li> 
+                        <li>People receiving ART:51,000</li>
+
+                    </ul>
+
+                </div>
+
+                <div class="col-sm-5 col-sm-offset-1">
+                
+                    <ul> 
+                        <li>HIV prevalence among injection drug users: 25% </li> 
+                        <li>Number of syringes distribuited per person in 2013: 12.0 </li> 
+                        <li>Condom use among IDU: 65%%</li>
+                        <li>Safe Injecting: 34%</li>
+                        <li>New infections in children in 2013 <200 [<200-<200]</li>
+                        <li>Prevalence among sex workers: 3% </li>
+                        <li>Prevalence among men who have sex with men: 7% </li>
+                        <li>Total spending in preventing mother to child transmission in 2010:2.7 million dollars</li>
+                    </ul> <br />
+                </div>
+            </div>
+        <div >
+                    <p class="text"> In 1987  an estimated odf 1% of IDU in Bangkok are infected with HIV; by the end of the following year (1988) an estimated 30% of IDU in Bangkok is Hiv positive. In 1991 Thailand Launches Asia’s most extensive Hiv prevention programme. <br/> In 1993 the budget for Thailand aids control program is increased almost 20 fold to 44 million dollars. The government launches the 100 per cent condom programma to prevent further infections among sex workers. In 1994 the prevalence of HIV among sex workers peak at 33.2%<br/> In 1999 AZT to reduce mother to child transmission is used in most hospitals in Thailand. <br/> In 2000 Men account for 4 out of 5 hiv infections in Asia. <br/> In 2003 Thailand has reduced the number of new infections from 143.000 in 1991 to 19.000. <br/>  In 2006 in order to treat more people and cut the cost of second line treatment, Thailand begins to issue compulsory licences for certain antiretrovirals, the first being efvirenx. Half of young gay men in Bangkok who aren't consistent condom users acquire HIV within five years of starting sex (www.aidsmap.com). </p>
+                        <br />
+                   
+
+                       
+
+                     <p id="back"><a href="index.html" class="btn btn-default">Go back to main page</a></p>
+                     <br />
+                     <br />
+        </div>
+
+
+
+    </div> <!-- end container -->
+
+
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script>
+       var  margin  = {top:50, right:60, bottom:40, left:90},
+            width   = 1200,
+            height  = 300,
+            alldata = [];
+
+        var svg = d3.select("#chart")
+    .append("svg")
+    .attr("width", width)
+    .attr("height", height)
+    //.attr("viewBox", "0 0 " + width + " " + height);
+
+    var yScale = d3.scale.linear()
+    .range([height - margin.top - margin.bottom, 0]);
+
+    var xScale = d3.scale.ordinal()
+    .rangeRoundBands([0, width - margin.right - margin.left], .1);
+
+    var xAxis = d3.svg.axis()
+    .scale(xScale)
+    .orient("bottom");
+
+    var yAxis = d3.svg.axis()
+    .scale(yScale)
+    .orient("left")
+    .ticks(3);
+
+    
+    var turn = 0;
+
+    columns = ["New Infections", "Deaths"];
+    colors = {"New Infections": "orange", "Deaths": "red"};
+    titles = {"New Infections": "Estimated new HIV cases All ages", "Deaths": "Annual number of AIDS deaths"};
+
+    function display_data(columnid, data) {
+
+        column = columns[columnid];
+
+        //only change domain if its a click
+        if(arguments.length > 0){
+
+            //change the domain for the maximum value of the column picked
+            yScale.domain([0, d3.max(alldata.map(function(d){ return +d[column]; }))]);
+            
+        }
+        
+
+        d3.selectAll(".bar")
+        .transition()
+        .duration(600)
+        .attr("y", function(d){ return yScale(d[column]); })
+        .attr("height", function(d){ return height - margin.top - margin.bottom - yScale(d[column]); })
+        .style({"fill": colors[column]});
+
+        d3.selectAll(".title")
+        .transition()
+        .text(titles[column]);
+
+        d3.selectAll(".textlabel")
+        .transition()
+        .duration(700)
+        .attr("y", function(d){ return yScale(d[column]) - 3; })
+        .text(function(d){ return d3.format(",")(d[column]); });
+    }
+
+    
+    d3.csv("ThailandHiv.csv", function(error, data){
+  alldata = data;
+
+        console.log(data);
+
+                
+                //convert numerical values from strings to numbers
+                data = data.map(function(d){ d.value = +d["New Infections"]; return d; });
+                data = data.map(function(d){ d.value = +d["Deaths"]; return d; });
+
+
+        yScale.domain([0,  d3.max(data.map(function (d){return +d.Prevalence;}))]);
+        xScale.domain(data.map(function(d){ return d["year"]; }));
+
+        svg.append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+            .selectAll(".bar")
+            .data(data)
+            .enter()
+            .append("rect")
+            .attr("class", "bar")
+            .attr("x", function(d){ return xScale(d["year"]); })
+            
+            
+            .attr("width", function(d){ return xScale.rangeBand(); })
+            .style({"fill":"pink"})
+         //    .on("click", function(d){
+
+                                //      turn = turn + 1;
+                                //     turn = turn % columns.length;   
+                                //     display_data(turn, d);
+                
+       //      });
+
+         d3.select("#NewInfections")
+            .on("click",function(d){
+                turn = 0;
+                turn = turn % columns.length;   
+                display_data(turn, d);
+            })
+
+        d3.select("#Deaths")
+            .on("click",function(d){
+                turn = 1;
+                turn = turn % columns.length;   
+                display_data(turn, d);
+            })
+       
+
+       // svg.append("g")
+         //   .attr("class", "y axis")
+           // .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+            //.call(yAxis);
+
+
+        svg.append("g")
+            .attr("class", "x axis")
+            .attr("transform", "translate(" + margin.left + "," + (height - margin.bottom) + ")")
+            .call(xAxis);
+
+        svg.append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+            .selectAll(".textlabel")
+            .data(data)
+            .enter()
+            .append("text")
+            .attr("class", "textlabel")
+            .attr("x", function(d){ return xScale(d["year"]) + (xScale.rangeBand()/2); })
+            .style("text-anchor", "middle");
+            
+          
+        svg.append("g")
+            .attr("transform", "translate(" + (width/2) + ", 15)")
+            .append("text")
+            .attr("class", "title")
+            .style({"text-anchor":"middle", "font-family":"Arial", "font-weight":"800"});
+
+        display_data(turn); // turn = 0 here.
+
+            
+
+    });
+
+
+    </script>
+</body>
+</html>

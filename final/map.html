@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css"> 
+<link rel="stylesheet" type="text/css" href="d3-tip.css">
+<style>
+
+    #buttons{
+        margin-left: 30%;
+    };
+
+    
+ 
+</style>
+
+</head>
+<body>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="http://d3js.org/topojson.v1.min.js"></script>
+<script src="http://d3js.org/colorbrewer.v1.min.js"></script>
+<script src="d3-tip.js"></script>
+
+<div id="buttons">
+                  <button id="Prevalence" class="btn btn-default">Prevalence</button>
+                  <button id="Deaths" class="btn btn-default">ART Coverage</button>
+                  <br />
+                  <br />
+                  <p style="margin-left:5%">Source data: <b><a href="http://www.unaids.org/"> UNAIDS</a></b></p>
+                  <br />
+
+</div>
+
+
+
+
+<script>
+
+
+var width = 1200,
+	height = 900;
+
+var svg = d3.select('body').append('svg')
+    .attr('width', width)
+    .attr('height', height);
+
+var projection = d3.geo.equirectangular()
+.center([103.5,15])
+.scale(1000)
+.translate([width / 4, height / 4]);
+
+
+
+//var color = d3.scale.quantize()
+   // .domain([0, 2)
+    //.range (d3.range(3).map(function(i) {return "q" + i + "-3"; }));
+
+var color = {
+	"Malaysia" : "#deebf7",
+	"Philippines" : "#B0E2FF",
+	"Vietnam" : "#87CEFA",
+	"Myanmar" :"#9BC4E2",
+	"Laos" : "#87CEFF",
+	"Thailand" : "#7EC0EE",
+	"Indonesia" : "#6CA6CD",
+	"Cambodia" : "#5D7B93"
+}
+
+//var colorART = {
+ //"Malaysia" : "#C5E3BF",
+// "Philippines" : "#A9C9A4	",
+// "Vietnam" : "#7BBF6A",
+// "Myanmar" :"#55AE3A",
+// "Laos" : "#4CBB17",
+// "Thailand" : "#3D8B37",
+// "Indonesia" : "#395D33",
+//"Cambodia" : "#3B5E2B"
+//}
+
+
+var gotourl = {
+	
+
+	"Malaysia" : "malaysia.html",
+	"Philippines" : "philippines.html",
+	"Vietnam" : "vietnam.html",
+	"Myanmar" :"myanmar.html",
+	"Laos" : "laos.html",
+	"Thailand" : "thailand.html",
+	"Indonesia" : "indonesia.html",
+	"Cambodia" : "cambodia.html"
+}
+
+
+
+	var tip = d3.tip()
+		.attr("class", "d3-tip")
+		.html(function(d){
+						return d.properties.sovereignt + "<br>" + "Prevalence:" + d.properties.PREVALENCE;
+
+				});
+
+
+svg.call(tip);
+
+
+var path = d3.geo.path()
+	.projection(projection);
+
+d3.json('asia.json', function(error, asia) { //world = temporary
+
+
+
+	console.log(topojson.feature(asia, asia.objects.asia));
+	svg.selectAll("path")
+		.data(topojson.feature(asia, asia.objects.asia).features)
+		.enter()
+		.append('path')
+		.attr('class', 'country')
+		.attr('d', path)
+		.style("fill", function(d){ return color[d.properties.sovereignt]; })
+		.style("cursor", "pointer")
+		.on("mouseover", tip.show)
+
+		/* function(d){
+			
+			console.log(d.properties);
+
+
+			d3.select(this)
+			  .style("opacity", "0.5");
+		})*/
+		.on("mouseout", tip.hide) /* function(d) {
+
+			d3.select(this)
+			  .style("opacity", "1");
+
+
+
+		})*/
+		.on("click", function(d){
+
+			top.location.href = gotourl[d.properties.sovereignt];
+
+		});
+
+
+      
+		/* d3.select("#Prevalence")
+            .on("click",function(d){
+             .style("fill", function(d){ return color[d.properties.sovereignt]; })
+            })
+
+        d3.select("#ART Coverage")
+            .on("click",function(d){
+            	.style("fill", function(d){ return colorART[d.properties.sovereignt]; })
+            });*/
+
+		
+
+          
+});
+</script>
+</body>
+</html>

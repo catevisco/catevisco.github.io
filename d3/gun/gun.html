@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>D3 Exercises</title>
+</head>
+<body>
+    <svg width="900" height="500"></svg>
+
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script>
+
+    	d3.csv("sample_gun_data.csv", function(d){ d["murders"] = +d["murders"]; return d; }, function(d){
+
+    		console.log(d);
+
+    	})
+        //your code will go here
+
+    </script>
+</body>
+</html>
