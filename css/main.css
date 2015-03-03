@@ -1,25 +1,4 @@
-
-
-    /* Center the water video in background */
-    #water-video{
-        position: absolute;
-        z-index: -1;
-        left: 50%;
-        top:50%;
-        width:auto;
-        height: 100%;
-        transform: translate(-50%, -50%);
-    }
-    @media screen and (min-aspect-ratio: 16/9) { 
-        #water-video{
-            height:auto;
-            width:100%;
-        }
-    }
-
-
-
-    /* Black nav bar */
+ /* Black nav bar */
     .navbar-default{
         background:white;
         border-color:white;
@@ -35,19 +14,19 @@
 
     /* Main header */
     #main-header{
-       background-image: url(img/tracks.jpg);
+       background-image: url(img/tracks1.jpg);
        background-size: cover;
        background-position: center;
-    text-align: center;
-       color:black;
+       text-align: center;
+       color:#FFFAF0;
        font-family: 'Alegreya', serif;
        min-height:720px;
-       padding-top: 250px;
+       padding-top: 150px;
 
     }
     #main-header h1{
         /text-transform: uppercase;
-        font-size: 80px;
+        font-size: 100px;
     }
     #main-header h2{
         font-family: "Open Sans", Helvetica, Arial, sans-serif;
@@ -61,29 +40,12 @@
         width: 100%;
         z-index: 1;
     }
-    #main-header button{
-        font-family: "Open Sans", Helvetica, Arial, sans-serif;
-        font-weight: 100;
-        background: none;
-        color:#ccc;
-        margin: 20px 0;
+        
+    li {
+    margin-left:110px;  
     }
 
-    /* forest */
-    .forest, .solutions{
-        font-family: "Open Sans", Helvetica, Arial, sans-serif;
+    p{
+      font-size: 16px;
     }
-    .forest-container{
-        position: relative;
-        height: 1344px;
-    }
-
-
-    .section-title{
-        padding-top:300px;
-        padding-bottom:300px;
-    }
-
-    .section-title h2{
-        font-weight: 800;
-    }
+        
