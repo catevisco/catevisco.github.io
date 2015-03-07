@@ -112,9 +112,16 @@
 
                
 
+            
                 //create the bubbles
                 bubbles.append("circle")
                     .attr("class", "bubbles")
+                    .attr("r", 10)
+                    .transition()   //animate attributes after this
+                    .duration(600) //duration of animation
+                    .delay(function (d,i){
+                        return i*50
+                    })
                     .attr("r", function(d){ return d.r; })
                     .attr("cx", function(d){ return d.x; })
                     .attr("cy", function(d){ return d.y; })
