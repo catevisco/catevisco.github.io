@@ -16,7 +16,7 @@
     #main-header{
        background-image: url(img/tracks1.jpg);
        background-size: cover;
-       background-position: center;
+       background-position: center-bottom;
        text-align: center;
        color:#FFFAF0;
        font-family: 'Alegreya', serif;
@@ -42,10 +42,10 @@
     }
         
     li {
-    margin-left:120px;  
+    margin-left:20%;  
     }
 
     p{
-      font-size: 18px;
+      font-size: 24px;
     }
         
