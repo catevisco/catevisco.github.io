@@ -29,7 +29,7 @@
         font-size: 100px;
     }
     #main-header h2{
-        font-family: "Open Sans", Helvetica, Arial, sans-serif;
+        font-family: Avenir, Helvetica, Arial, sans-serif;
         font-weight: 100;
         font-size:40px
     }
@@ -42,11 +42,19 @@
     }
         
     li {
-    margin-left:70px; 
-    font-size: 16px; 
+    margin-left:110px; 
+    font-size: 20px;
+        font-family: Avenir, Helvetica, Arial, sans-serif;
     }
 
     p{
       font-size: 16px;
+       font-family: Avenir, Helvetica, Arial, sans-serif;
     }
+
+    footer {
+        margin-top: 10px;
+         margin-left:110px; 
         
+    }
+    
