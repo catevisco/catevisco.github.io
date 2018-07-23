@@ -543,7 +543,7 @@ section h3.section-subheading {
 @media(min-width:768px) {
 
     h2 {
-        font-size: 1em;
+        font-size: 1.em;
     }
 
     .timeline:before {

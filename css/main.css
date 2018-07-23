@@ -11,6 +11,16 @@
         background: #000;
     }
 
+    .navbar-default .navbar-nav{
+      float: none;
+      text-align: center;
+    }
+    .navbar-default .navbar-nav>li {
+      float: none;
+      display: inline-block;
+      margin-left: 0;
+    }
+
 
     /* Main header */
     #main-header{
