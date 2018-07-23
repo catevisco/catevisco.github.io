@@ -43,6 +43,22 @@
         font-weight: 100;
         font-size:40px
     }
+    @media (max-width: 480px){
+      #main-header h1{
+          font-size: 50px
+      }
+      #main-header h2{
+          font-size: 22px
+      }
+    }
+    @media (min-width: 481px) and (max-width: 767px){
+      #main-header h1{
+          font-size: 65px
+      }
+      #main-header h2{
+          font-size: 28px
+      }
+    }
     #header-container{
         position: relative;
         top: 0;
