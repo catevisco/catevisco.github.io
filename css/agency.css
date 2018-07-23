@@ -541,6 +541,11 @@ section h3.section-subheading {
 }
 
 @media(min-width:768px) {
+
+    h2 {
+        font-size: 1em;
+    }
+
     .timeline:before {
         left: 50%;
     }
